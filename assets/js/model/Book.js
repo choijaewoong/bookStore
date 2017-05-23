@@ -8,7 +8,7 @@ Book.instances = {};
 Book.convertRow2Obj = function(bookRow) {
     var book = new Book(bookRow);
     return book;
-};
+}
 // Loading all Book instances
 Book.loadAll = function() {
     var i = 0, 
@@ -32,7 +32,7 @@ Book.loadAll = function() {
             Book.instances[key] = Book.convertRow2Obj(bookTable[key]);
         }
     }
-};
+}
 // Saving all Book instances
 Book.saveAll = function() {
     var bookTableString = "", 
@@ -40,7 +40,7 @@ Book.saveAll = function() {
         numOfBooks = Object.keys(Book.instances).length;
     try {
         bookTableString = JSON.stringify(Book.instances).length;
-        localStroage["bookTable"] = bookTableString;
+        localStorage["bookTable"] = bookTableString;
     } catch(e) {
         alert("Error when writing to Local Storage\n" + e);
         error = true;
@@ -66,14 +66,13 @@ Book.update = function(slots) {
     console.log("Book " + slots.isbn + " modified");
 };
 // Deleting an existing Book instance
-Book.delete = function(isbn) {
+Book.destroy = function(isbn) {
     if(Book.instances[isbn]) {
         console.log("Book " + isbn + "deleted");
         delete Book.instances[isbn];
     } else {
-        console.log("There is no book with ISBN " + )
+        console.log("There is no book with ISBN " + isbn + " in the database!");
     }
-
 };
 // Clearing all data
 Book.clearData = function() {
@@ -82,7 +81,7 @@ Book.clearData = function() {
     }
 };
 // Test data
-Book.createTestData = function () {
+Book.createTestData = function() {
   Book.instances["006251587X"] = new Book({isbn:"006251587X", title:"Weaving the Web", year:2000});
   Book.instances["0465026567"] = new Book({isbn:"0465026567", title:"Gödel, Escher, Bach", year:1999});
   Book.instances["0465030793"] = new Book({isbn:"0465030793", title:"I Am A Strange Loop", year:2008});
