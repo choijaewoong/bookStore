@@ -58,7 +58,7 @@ Book.update = function(slots) {
     var book = Book.instances[slots.isbn];
     var year = parseInt(slots.year);
     if(book.title !== slots.title) {
-        book.titils = slots.title;
+        book.title = slots.title;
     }
     if(book.year !== year) {
         book.year = year;

@@ -7,8 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Book List</h1>
+    <h1>Update Book</h1>
     <form action="" id="Book">
+        <p>
+            <label for="select-book"></label>
+            <select id="select-book" name="selectBook"></select>
+        </p>
         <p>
             <label for="isbn">ISBN</label>
             <input id="isbn" type="text">
@@ -21,13 +25,13 @@
             <label for="year">Year</label>
             <input id="year" type="text">
         </p>
-        <button type="button" name="commit">Save</button>
+        <button type="button" name="commit">Save Changes</button>
     </form>
     <script src="assets/js/ctrl/initialize.js"></script>
     <script src="assets/js/model/Book.js"></script>
-    <script src="assets/js/view/viewCreateBook.js"></script>
+    <script src="assets/js/view/viewUpdateBook.js"></script>
     <script>
-      window.addEventListener("load", pl.view.createBook.setupUserInterface);
+      window.addEventListener("load", pl.view.updateBook.setupUserInterface);
     </script>
 </body>
 </html>
