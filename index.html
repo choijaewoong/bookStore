@@ -8,12 +8,15 @@
 </head>
 <body>
     <h1>bookstore_list</h1>
-    <table>
-        <tr>
-            <th>ISBN</th>
-            <th>Title</th>
-            <th>Year</th>
-        </tr>
-    </table>
+    <ul>
+        <li><a href="listBook.html"><button type="button">List all books</button></a></li>
+        <li><a href="createBook.html"><button type="button">Add a new book</button></a></li>
+        <li><a href="updateBook.html"><button type="button">Update a book</button></a></li>
+        <li><a href="deleteBook.html"><button type="button">Delete a book</button></a></li>
+        <li><button type="button" onclick="Book.clearData()">Clear database</button></li>
+        <li><button type="button" onclick="Book.createTestData()">Create test data</button></li>
+    </ul>
+    <script src="assets/js/ctrl/initialize.js"></script>
+    <script src="assets/js/model/Book.js"></script>
 </body>
 </html>
