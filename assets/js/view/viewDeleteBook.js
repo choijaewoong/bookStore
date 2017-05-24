@@ -1,6 +1,5 @@
 pl.view.deleteBook = {
     setupUserInterface: function() {
-        // Book.createTestData();
         var deleteButton = document.forms['Book'].commit;
         var selectEl = document.forms['Book'].selectBook;
         var i=0; key="", keys=[], book=null, optionEl=null;

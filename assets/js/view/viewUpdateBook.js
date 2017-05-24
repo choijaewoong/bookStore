@@ -1,6 +1,5 @@
 pl.view.updateBook = {
     setupUserInterface: function() {
-        Book.createTestData();
         var formEl = document.forms['Book'],
             saveButton = formEl.commit,
             selectBookEl = formEl.selectBook;

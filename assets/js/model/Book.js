@@ -26,7 +26,7 @@ Book.loadAll = function() {
     if(bookTableString) {
         bookTable = JSON.parse(bookTableString);
         keys = Object.keys(bookTable);
-        console.log(key.length + "books loaded.");
+        console.log(keys.length + "books loaded.");
         for(i=0; i<keys.length; i++) {
             key = keys[i];
             Book.instances[key] = Book.convertRow2Obj(bookTable[key]);
@@ -39,7 +39,7 @@ Book.saveAll = function() {
         error = false,
         numOfBooks = Object.keys(Book.instances).length;
     try {
-        bookTableString = JSON.stringify(Book.instances).length;
+        bookTableString = JSON.stringify(Book.instances);
         localStorage["bookTable"] = bookTableString;
     } catch(e) {
         alert("Error when writing to Local Storage\n" + e);

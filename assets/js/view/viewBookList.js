@@ -1,6 +1,5 @@
 pl.view.bookList = {
     setupUserInterface: function() {
-        Book.createTestData();
         var tableBodyEl = document.querySelector("table#books>tbody");
         var keys=[], key="", row={}, i=0;
         Book.loadAll();
