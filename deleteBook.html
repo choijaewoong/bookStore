@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bookstore</title>
+</head>
+<body>
+    <h1>bookstore_list</h1>
+    <form id="Book">
+        <p>
+            <label for="select-book"></label>
+            <select id="select-book" name="selectBook">
+            </select>
+        </p>
+        <button type="button" name="commit">Delete</button>        
+    </form>
+    <script src="assets/js/ctrl/initialize.js"></script>
+    <script src="assets/js/model/Book.js"></script>
+    <script src="assets/js/view/viewDeleteBook.js"></script>
+    <script>
+        window.addEventListener("load", pl.view.deleteBook.setupUserInterface);
+    </script>
+</body>
+</html>
