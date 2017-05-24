@@ -50,7 +50,7 @@ Book.saveAll = function() {
 // Creating a new Book instance
 Book.add = function(slots) {
     var book = new Book(slots);
-    Book.instatces[slots.isbn] = book;
+    Book.instances[slots.isbn] = book;
     console.log("Book " + slots.isbn + " created!");
 };
 // Updating an existing Book instance

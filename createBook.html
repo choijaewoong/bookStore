@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Book List</h1>
+    <form action="" id="Book">
+        <label for="isbn">ISBN</label>
+        <input id="isbn" type="text">
+        <label for="title">Title</label>
+        <input id="title" type="text">
+        <label for="year">Year</label>
+        <input id="year" type="text">
+        <button type="button" name="commit">Save</button>
+    </form>
+    <script src="assets/js/ctrl/initialize.js"></script>
+    <script src="assets/js/model/Book.js"></script>
+    <script src="assets/js/view/viewCreateBook.js"></script>
+    <script>
+      window.addEventListener("load", pl.view.createBook.setupUserInterface);
+    </script>
+</body>
+</html>
