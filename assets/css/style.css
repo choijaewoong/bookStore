@@ -1,3 +1,99 @@
-html, body {
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+body {
     margin: 0;
+    font-family: 'Malgun Gothic','맑은 고딕',sans-serif;
+    background: #f5f5f5;
+}
+div, ul, h1, button {
+    margin: 0;
+    padding: 0;
+}
+ol, ul {
+    list-style: none;
+}
+button {
+    border:0 none;
+    background-color:transparent;
+    cursor:pointer
+}
+
+.container {
+    margin: 50px auto;
+    max-width: 800px;
+    text-align: center;
+    font-size: 12px;
+}
+.contents {
+    margin: 20px;
+    padding: 0 20px;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+}
+.contents-main {
+    padding: 20px 0;
+    min-height: 400px;
+}
+.contents-bottom {
+    position: relative;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    text-align: right;
+}
+.btn-primary {
+    padding: 8px;
+    color: #888;
+    border: 1px solid #888;
+    border-radius: 4px;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #888;
+}
+.contents-bottom .btn-clear {
+    padding: 8px;
+    color: #db2828;
+    border: 1px solid #db2828;
+    border-radius: 4px;
+}
+.contents-bottom .btn-clear:hover {
+    color: #fff;
+    background-color: #db2828;
+}
+.contents-bottom .btn-create {
+    padding: 8px;
+    color: #16ab39;
+    border: 1px solid #16ab39;
+    border-radius: 4px;
+}
+.contents-bottom .btn-create:hover {
+    color: #fff;
+    background-color: #16ab39;
+}
+.list-book {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.list-item-book {
+    display: -webkit-flex;
+    display: flex;
+    padding: 10px;
+}
+.list-item-head {
+    background-color: #eee;    
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+.list-item-book .field-isbn {
+    width: 30%;
+}
+.list-item-book .field-title {
+    width: 50%;
+}
+.list-item-book .field-year {
+    width: 20%;
 }

@@ -5,19 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <h1>Book List</h1>
-    <table id="books">
-        <thead>
-            <tr>
-                <th>ISBN</th>
-                <th>Title</th>
-                <th>Year</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="container"> 
+        <h1>Book List</h1>
+        <div class="contents">
+            <div class="contents-main">
+                <ul class="list-book">
+                    <li class="list-item-book list-item-head">
+                        <span class="field-isbn">ISBN</span>
+                        <span class="field-title">Title</span>
+                        <span class="field-year">Year</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <script src="assets/js/ctrl/initialize.js"></script>
     <script src="assets/js/model/Book.js"></script>
     <script src="assets/js/view/viewBookList.js"></script>

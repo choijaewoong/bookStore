@@ -8,15 +8,25 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <h1>bookstore_list</h1>
-    <ul>
-        <li><a href="listBook.html"><button type="button">List all books</button></a></li>
-        <li><a href="createBook.html"><button type="button">Add a new book</button></a></li>
-        <li><a href="updateBook.html"><button type="button">Update a book</button></a></li>
-        <li><a href="deleteBook.html"><button type="button">Delete a book</button></a></li>
-        <li><button type="button" onclick="Book.clearData()">Clear database</button></li>
-        <li><button type="button" onclick="Book.createTestData()">Create test data</button></li>
-    </ul>
+    <div class="container">
+        <h1>Book Store</h1>
+        <div class="contents">
+            <div class="contents-main">
+                <ul>
+                    <li><a href="listBook.html"><button type="button">List all books</button></a></li>
+                    <li><a href="createBook.html"><button type="button">Add a new book</button></a></li>
+                    <li><a href="updateBook.html"><button type="button">Update a book</button></a></li>
+                    <li><a href="deleteBook.html"><button type="button">Delete a book</button></a></li>
+                    <li><button type="button" onclick="Book.clearData()">Clear database</button></li>
+                    <li><button type="button" onclick="Book.createTestData()">Create test data</button></li>
+                </ul>
+            </div>
+            <div class="contents-bottom">
+                <button class="btn-create" type="button" onclick="Book.createTestData()">Create</button>
+                <button class="btn-clear" type="button" onclick="Book.clearData()">Clear</button>
+            </div>
+        </div>
+    </div>
     <script src="assets/js/ctrl/initialize.js"></script>
     <script src="assets/js/model/Book.js"></script>
 </body>

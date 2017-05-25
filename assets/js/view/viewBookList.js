@@ -1,15 +1,22 @@
 pl.view.bookList = {
     setupUserInterface: function() {
-        var tableBodyEl = document.querySelector("table#books>tbody");
+        var bookList = document.querySelector('.list-book');
         var keys=[], key="", row={}, i=0;
         Book.loadAll();
-        keys = Object.keys(Book.instances);
+        keys= Object.keys(Book.instances);
         for(i=0; i<keys.length; i++) {
             key = keys[i];
-            row = tableBodyEl.insertRow();
-            row.insertCell(-1).textContent = Book.instances[key].isbn;
-            row.insertCell(-1).textContent = Book.instances[key].title;
-            row.insertCell(-1).textContent = Book.instances[key].year;
+            var listItem = document.createElement('li');
+            listItem.className = 'list-item-book';
+            listItem.innerHTML = pl.view.bookList.templateListItem(Book.instances[key].isbn,
+                                                  Book.instances[key].title,
+                                                  Book.instances[key].year);
+            bookList.appendChild(listItem);
         }
+    },
+    templateListItem : function(isbn, title, year) {
+        return '<span class="field-isbn">' + isbn + '</span>\
+                <span class="field-title">' + title + '</span>\
+                <span class="field-year">' + year + '</span>';
     }
 }
