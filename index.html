@@ -12,13 +12,18 @@
         <h1>Book Store</h1>
         <div class="contents">
             <div class="contents-main">
+                <ul class="list-book">
+                    <li class="list-item-book list-item-head">
+                        <span class="field-isbn">ISBN</span>
+                        <span class="field-title">Title</span>
+                        <span class="field-year">Year</span>
+                    </li>
+                </ul>
                 <ul>
                     <li><a href="listBook.html"><button type="button">List all books</button></a></li>
                     <li><a href="createBook.html"><button type="button">Add a new book</button></a></li>
                     <li><a href="updateBook.html"><button type="button">Update a book</button></a></li>
                     <li><a href="deleteBook.html"><button type="button">Delete a book</button></a></li>
-                    <li><button type="button" onclick="Book.clearData()">Clear database</button></li>
-                    <li><button type="button" onclick="Book.createTestData()">Create test data</button></li>
                 </ul>
             </div>
             <div class="contents-bottom">
@@ -29,5 +34,9 @@
     </div>
     <script src="assets/js/ctrl/initialize.js"></script>
     <script src="assets/js/model/Book.js"></script>
+    <script src="assets/js/view/viewBookList.js"></script>
+    <script>
+      window.addEventListener("load", pl.view.bookList.setupUserInterface);
+    </script>
 </body>
 </html>
