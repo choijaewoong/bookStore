@@ -27,6 +27,7 @@
                 </ul>
             </div>
             <div class="contents-bottom">
+                <button id="btn-add-book" class="btn-primary" type="button">Add</button>
                 <button class="btn-create" type="button" onclick="Book.createTestData()">Create</button>
                 <button class="btn-clear" type="button" onclick="Book.clearData()">Clear</button>
             </div>
@@ -34,9 +35,9 @@
     </div>
     <script src="assets/js/ctrl/initialize.js"></script>
     <script src="assets/js/model/Book.js"></script>
-    <script src="assets/js/view/viewBookList.js"></script>
+    <script src="assets/js/view/viewIndex.js"></script>
     <script>
-      window.addEventListener("load", pl.view.bookList.setupUserInterface);
+        window.addEventListener("load", pl.view.index.setupUserInterface);
     </script>
 </body>
 </html>

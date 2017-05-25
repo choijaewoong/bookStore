@@ -97,9 +97,37 @@ button {
 .list-item-book .field-year {
     width: 20%;
 }
+.list-item-book .label-isbn {
+    display: inline-block;
+    width: 30%;
+    padding: 0 10px;    
+}
+.list-item-book .label-title {
+    display: inline-block;
+    width: 50%;
+    padding: 0 10px;    
+}
+.list-item-book .label-year {
+    display: inline-block;
+    width: 20%;
+    padding: 0 10px;    
+}
+.list-item-book .field-input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
-/*@media screen and (max-width: 640px) {
-    .contents {
-        margin: 20px 0;
-    }
-}*/
+.form-add-item {
+    width: 100%;
+    font-size: 0;
+    text-align: right;
+}
+.form-add-item .field-wrapper {
+    display: inline-block;
+    padding: 0 5px;
+}
+.form-add-item .btn-submit {
+    margin: 10px 10px 0 0;
+}
