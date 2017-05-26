@@ -23,6 +23,10 @@ pl.view.index = {
         var updateButton = document.getElementById('btnUpdateBook');
         updateButton.addEventListener('click', 
             function() { pl.view.index.createInputRadio(keys)});
+
+        var deleteButton = document.getElementById('btnDeleteBook');
+        deleteButton.addEventListener('click',
+            function() { pl.view.index.createDeleteCheckbox(keys)});
     },
     templateListItem : function(isbn, title, year) {
         return '<span class="field-isbn">' + isbn + '</span>\
@@ -126,6 +130,37 @@ pl.view.index = {
             });
         });
     },
+    createDeleteCheckbox: function(keys) {
+        if(document.querySelector('.form-delete') !== null) return;
+        var container = document.querySelector('.contents-main');
+        var form = document.createElement('form');
+        form.className = 'form-delete';
+        container.appendChild(form);
+        for(i=0; i<keys.length; i++){
+            key = keys[i];
+            book = Book.instances[key];
+            checkbox = document.createElement("input");
+            checkbox.className = 'input-check';
+            checkbox.type = "checkbox";
+            checkbox.name = "book";
+            checkbox.value = book.isbn;
+            form.appendChild(checkbox);
+        }
+        pl.view.index.createDeleteConfirmButton();
+    },
+    createDeleteConfirmButton: function() {
+        var bookList = document.querySelector('.list-book');
+        var deleteConfirmButton = document.createElement('li');
+        deleteConfirmButton.className = 'list-item-book';
+        deleteConfirmButton.innerHTML = pl.view.index.templateDeleteConfirmButton();
+        bookList.appendChild(deleteConfirmButton);
+        var cancelButton = document.getElementById('btnCancel');
+        cancelButton.addEventListener('click', function() {
+            this.parentElement.parentElement.remove();
+            var radioForm = document.querySelector('.form-radio');
+            radioForm.remove();
+        });
+    },
     textUpdateForm: function(isbn, title, year) {
         var isbnInput = document.querySelector('#formUpdateItem #isbn');
         var titleInput = document.querySelector('#formUpdateItem #title');
@@ -155,5 +190,9 @@ pl.view.index = {
                     <button id="btnCancel" class="btn-red btn-submit" type="submit">cancel</button>\
                     <button id="btnUpdateItem" class="btn-brown btn-submit" type="submit">update</button>\
                 </form>';
+    },
+    templateDeleteConfirmButton: function() {
+        return '<button id="btnCancel" class="btn-red btn-submit" type="submit">cancel</button>\
+                <button id="btnDeleteItem" class="btn-red btn-submit" type="submit">delete</button>';
     }
 }

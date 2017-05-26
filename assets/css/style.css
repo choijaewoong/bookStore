@@ -164,12 +164,18 @@ button {
 
 .form-radio {
     position: absolute;
-    top: 80px;
+    top: 82px;
     left: 20px;
     width: 20px;
     font-size: 0;
 }
-
-.input-radio {
+.form-delete {
+    position: absolute;
+    top: 82px;
+    right: 20px;
+    width: 20px;
+    font-size: 0;
+}
+.input-radio, .input-check {
     height: 40px;
 }
