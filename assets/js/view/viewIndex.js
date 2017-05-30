@@ -1,125 +1,87 @@
 pl.view.index = {
     setupUserInterface: function() {
         var bookList = document.querySelector('.list-book');
-        var keys=[], key="", row={}, i=0;
+        var keys=[], key="";
         Book.loadAll();
         keys= Object.keys(Book.instances);
-        for(i=0; i<keys.length; i++) {
+        for(var i=0; i<keys.length; i++) {
             key = keys[i];
             var listItem = document.createElement('li');
             listItem.className = 'list-item-book';
             listItem.innerHTML = pl.view.index.templateListItem(Book.instances[key].isbn,
-                                                  Book.instances[key].title,
-                                                  Book.instances[key].year);
+                                                                Book.instances[key].title,
+                                                                Book.instances[key].year);
             bookList.appendChild(listItem);
         }
-
+        
         // create form and submit button for add
-        var addButton = document.getElementById('btn-add-book');
+        var addButton = document.getElementById('btnAddbook');
         addButton.addEventListener('click',
-            pl.view.index.createInputForm);
+            pl.view.index.createAddForm);
 
         // create radio button and submit button for update
         var updateButton = document.getElementById('btnUpdateBook');
         updateButton.addEventListener('click', 
-            function() { pl.view.index.createInputRadio(keys)});
+            function() { pl.view.index.createUpdateForm(keys)});
         
         // create select box and submit button for button
         var deleteButton = document.getElementById('btnDeleteBook');
         deleteButton.addEventListener('click',
-            function() { pl.view.index.createDeleteCheckbox(keys)});
+            function() { pl.view.index.createDeleteForm(keys)});
     },
-    handleSaveButtonClickEvent: function() {
-        var itemform = document.getElementById('formAddItem');
-        var slots = { isbn: itemform.isbn.value,
-                      title: itemform.title.value,
-                      year: itemform.year.value };
+    submitAddBook: function() {
+        var addform = document.getElementById('formAddItem');
+        var slots = { isbn: addform.isbn.value,
+                      title: addform.title.value,
+                      year: addform.year.value };
         Book.add(slots);
-        itemform.reset();        
+        // itemform.reset();
     },
-    handleUpdateButtonClickEvent: function() {
-        var itemform = document.getElementById('formUpdateItem');
-        var slots = {isbn: itemform.isbn.value,
-                     title: itemform.title.value,
-                     year: itemform.year.value
-                    };
+    submitUpdateBook: function() {
+        var updateform = document.getElementById('formUpdateItem');
+        var slots = { isbn: updateform.isbn.value,
+                      title: updateform.title.value,
+                      year: updateform.year.value };
         Book.update(slots);
-        optionEl = selectBookEl.querySelector("option[value='" + slots.isbn +"']");
-        optionEl.text = slots.title;
-        optionEl.year = slots.year;
-        formEl.reset();
+        // updateform.reset();
     },
-    handleDeleteButtonClickEvent: function() {
-        var selectBox = document.querySelectorAll('.input-radio');
-        var slotsList;
-
-        Array.prototype.forEach.call(radios, function(radio) {
-            radio.addEventListener('change', function() {
-                book = Book.instances[this.value];                
-                pl.view.index.textUpdateForm(book.isbn, book.title, book.year);
-            });
-        });
-
-    },
-    createInputForm: function() {
+    createAddForm: function() {
         if(document.getElementById('formAddItem') !== null) return;
+
         var updateForm = document.getElementById('formUpdateItem');
         if(updateForm !== null) {
             updateForm.parentElement.remove();
             var radioForm = document.querySelector('.form-radio');
             radioForm.remove();
         }
+        
         var bookList = document.querySelector('.list-book');
-        var addForm = document.createElement('li');
-        addForm.className = 'list-item-book';
-        addForm.innerHTML = pl.view.index.templateAddForm();
-        bookList.appendChild(addForm);
-        var cancelButton = document.getElementById('btnCancel');
-        cancelButton.addEventListener('click', function() {
-            this.parentElement.parentElement.remove();
-        });
+        bookList.innerHTML += pl.view.index.templateAddForm();
 
-        // define save button
-        var saveButton = document.getElementById('btnSaveItem');
-        saveButton.addEventListener("click",
-            pl.view.index.handleSaveButtonClickEvent);
+        // submit add button
+        var submitButton = document.getElementById('btnAddSubmit');
+        submitButton.addEventListener("click",
+            pl.view.index.submitAddBook);
         window.addEventListener("beforeunload", function() {
             Book.saveAll();
         });
-    },
-    createUpdateForm: function() {
-        // if(document.getElementById('formUpdateItem') !== null) return;
-        var addForm = document.getElementById('formAddItem');
-        if(addForm !== null) {
-            addForm.parentElement.remove();
-        }
-        var bookList = document.querySelector('.list-book');
-        var updateForm = document.createElement('li');
-        updateForm.className = 'list-item-book';
-        updateForm.innerHTML = pl.view.index.templateUpdateForm();
-        bookList.appendChild(updateForm);
-        var cancelButton = document.getElementById('btnCancel');
+        
+        var cancelButton = document.getElementById('btnAddCancel');
         cancelButton.addEventListener('click', function() {
             this.parentElement.parentElement.remove();
-            var radioForm = document.querySelector('.form-radio');
-            radioForm.remove();
         });
-
-        // define save button
-        var updateButton = document.getElementById('btnUpdateItem');
-        updateButton.addEventListener("click",
-            pl.view.index.handleUpdateButtonClickEvent);
-        window.addEventListener("beforeunload", function() {
-            Book.saveAll();
-        });
-    },
-    createInputRadio: function(keys) {        
+    },    
+    createUpdateForm: function(keys) {        
         if(document.querySelector('.form-radio') !== null) return;
+
         var container = document.querySelector('.contents-main');
-        var form = document.createElement('form');
-        form.className = 'form-radio';
-        container.appendChild(form);
-        for(i=0; i<keys.length; i++){
+        var radioform = document.createElement('form');
+        radioform.className = 'form-radio';
+        container.appendChild(radioform);
+
+        pl.view.index.createUpdateTextForm();
+
+        for(var i=0; i<keys.length; i++){
             key = keys[i];
             book = Book.instances[key];
             radio = document.createElement("input");
@@ -131,18 +93,45 @@ pl.view.index = {
                 book = Book.instances[this.value];                
                 pl.view.index.textUpdateForm(book.isbn, book.title, book.year);
             });
-            form.appendChild(radio);
+            radioform.appendChild(radio);
         }
-        pl.view.index.createUpdateForm();
     },
-    createDeleteCheckbox: function(keys) {
+    createUpdateTextForm: function() {
+        if(document.getElementById('formUpdateItem') !== null) return;
+
+        var addForm = document.getElementById('formAddItem');
+        if(addForm !== null) {
+            addForm.parentElement.remove();
+        }
+
+        var bookList = document.querySelector('.list-book');
+        bookList.innerHTML += pl.view.index.templateUpdateTextForm();
+
+        // submit update button
+        var updateButton = document.getElementById('btnUpdateSubmit');
+        updateButton.addEventListener("click",
+            pl.view.index.submitUpdateBook);
+        window.addEventListener("beforeunload", function() {
+            Book.saveAll();
+        });
+
+        var cancelButton = document.getElementById('btnUpdateCancel');
+        cancelButton.addEventListener('click', function() {
+            this.parentElement.parentElement.remove();
+            var radioForm = document.querySelector('.form-radio');
+            radioForm.remove();
+        });
+    },
+    createDeleteForm: function(keys) {
         if(document.querySelector('.form-delete') !== null) return;
+
         var container = document.querySelector('.contents-main');
-        var form = document.createElement('form');
+        var deleteform = document.createElement('form');        
+        deleteform.className = 'form-delete';
+        container.appendChild(deleteform);
+        
         var bookArr = [];
-        form.className = 'form-delete';
-        container.appendChild(form);
-        for(i=0; i<keys.length; i++){
+        for(var i=0; i<keys.length; i++){
             key = keys[i];
             book = Book.instances[key];
             checkbox = document.createElement("input");
@@ -153,36 +142,28 @@ pl.view.index = {
             checkbox.addEventListener('change', function() {
                 if(this.checked) {
                     bookArr.push(this.value);
-                    console.log(bookArr);
                 } else {
-                    bookArr.splice(bookArr.indexOf(this.value),1);
-                    console.log(bookArr);
+                    bookArr.splice(bookArr.indexOf(this.value), 1);
                 }
-            })
-            form.appendChild(checkbox);
+            });
+            deleteform.appendChild(checkbox);
         }
-        pl.view.index.createDeleteConfirmButton(bookArr);
+        pl.view.index.createDeleteSubmitButton(bookArr);
     },
-    createDeleteConfirmButton: function(bookArr) {
+    createDeleteSubmitButton: function(bookArr) {
         var bookList = document.querySelector('.list-book');
+
+        bookList.innerHTML += pl.view.index.templateDeleteSubmitButton();
+        
         var deleteForm = document.querySelector('.form-delete');
-        var deleteConfirmButton = document.createElement('li');
-        deleteConfirmButton.className = 'list-item-book';
-        deleteConfirmButton.innerHTML = pl.view.index.templateDeleteConfirmButton();
-        bookList.appendChild(deleteConfirmButton);
-        var cancelButton = document.getElementById('btnCancel');
+        var cancelButton = document.getElementById('btnDeleteCancel');
         cancelButton.addEventListener('click', function() {
-            deleteConfirmButton.remove();
+            this.parentElement.parentElement.remove();
             deleteForm.remove();
         });
-        var submitButton = document.getElementById('btnDeleteItem');
+        var submitButton = document.getElementById('btnDeleteSubmit');
         submitButton.addEventListener('click', function() {
             for(var i=0; i<bookArr.length; i++) {
-                var deleteElement = document.querySelector(".field-isbn[data-isbn='" + bookArr[i] + "']").parentElement;
-                console.log(deleteElement);
-                deleteElement.remove();
-                deleteConfirmButton.remove();
-                deleteForm.remove();
                 Book.destroy(bookArr[i]);
             }
         });
@@ -191,12 +172,11 @@ pl.view.index = {
         });
     },
     textUpdateForm: function(isbn, title, year) {
-        var isbnInput = document.querySelector('#formUpdateItem #isbn');
-        var titleInput = document.querySelector('#formUpdateItem #title');
-        var yearInput = document.querySelector('#formUpdateItem #year');
-        isbnInput.value = isbn;
-        titleInput.value = title;
-        yearInput.value = year;
+        var updateForm = document.getElementById('formUpdateItem');
+        updateForm.isbn.value = isbn;
+        updateForm.title.value = title;
+        updateForm.year.value = year;
+        console.log(updateForm.isbn.value);
     },
     templateListItem : function(isbn, title, year) {
         return '<span class="field-isbn" data-isbn="' + isbn + '">' + isbn + '</span>\
@@ -204,28 +184,33 @@ pl.view.index = {
                 <span class="field-year">' + year + '</span>';
     },
     templateAddForm : function() {
-        return '<form id="formAddItem" class="form-add-item">\
-                    <label class="label-isbn" for="isbn"><input id="isbn" class="field-input" type="text"></label>\
-                    <label class="label-title" for="title"><input id="title" class="field-input" type="text"></label>\
-                    <label class="label-year" for="year"><input id="year" class="field-input" type="text"></label>\
-                    <button id="btnCancel" class="btn-red btn-submit" type="submit">cancel</button>\
-                    <button id="btnSaveItem" class="btn-blue btn-submit" type="submit">Add</button>\
-                </form>';
+        return '<li class="list-item-book">\
+                    <form id="formAddItem" class="form-add-item">\
+                        <label class="label-isbn" for="isbn"><input id="isbn" class="field-input" type="text"></label>\
+                        <label class="label-title" for="title"><input id="title" class="field-input" type="text"></label>\
+                        <label class="label-year" for="year"><input id="year" class="field-input" type="text"></label>\
+                        <button id="btnAddCancel" class="btn-red btn-submit" type="button">cancel</button>\
+                        <button id="btnAddSubmit" class="btn-blue btn-submit" type="submit">Add</button>\
+                    </form>\
+                </li>';
     },
-    templateUpdateForm : function() {
-        return '<form id="formUpdateItem" class="form-add-item">\
-                    <label class="label-isbn" for="isbn"><input id="isbn" class="field-input" type="text" readonly></label>\
-                    <label class="label-title" for="title"><input id="title" class="field-input" type="text"></label>\
-                    <label class="label-year" for="year"><input id="year" class="field-input" type="text"></label>\
-                    <button id="btnCancel" class="btn-red btn-submit" type="submit">cancel</button>\
-                    <button id="btnUpdateItem" class="btn-brown btn-submit" type="submit">update</button>\
-                </form>';
+    templateUpdateTextForm : function() {
+        return '<li class="list-item-book">\
+                    <form id="formUpdateItem" class="form-add-item">\
+                        <label class="label-isbn" for="isbn"><input id="isbn" class="field-input" type="text" readonly></label>\
+                        <label class="label-title" for="title"><input id="title" class="field-input" type="text"></label>\
+                        <label class="label-year" for="year"><input id="year" class="field-input" type="text"></label>\
+                        <button id="btnUpdateCancel" class="btn-red btn-submit" type="button">cancel</button>\
+                        <button id="btnUpdateSubmit" class="btn-brown btn-submit" type="submit">update</button>\
+                    </form>\
+                </li>';
     },
-    templateDeleteCheckBox: function(isbn) {
-        return '<input class="input-check" type="checkbox" name="book" value="' + isbn + '">';
-    },
-    templateDeleteConfirmButton: function() {
-        return '<button id="btnCancel" class="btn-red btn-submit" type="submit">cancel</button>\
-                <button id="btnDeleteItem" class="btn-red btn-submit" type="submit">delete</button>';
+    templateDeleteSubmitButton: function() {
+        return '<li class="list-item-book">\
+                    <form>\
+                        <button id="btnDeleteCancel" class="btn-red btn-submit" type="button">cancel</button>\
+                        <button id="btnDeleteSubmit" class="btn-red btn-submit" type="submit">delete</button>\
+                    </form>\
+                </li>';
     }
 }
