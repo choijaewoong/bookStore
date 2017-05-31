@@ -169,7 +169,7 @@ button {
     width: 20px;
     font-size: 0;
 }
-.form-delete {
+.form-checkbox {
     position: absolute;
     top: 82px;
     right: 20px;
