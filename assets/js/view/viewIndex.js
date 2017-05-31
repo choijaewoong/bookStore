@@ -56,7 +56,7 @@ pl.view.index = {
         // update list
         var updateList = document.querySelector('.field-isbn[data-isbn="' + updateForm.isbn.value + '"').parentElement;
         updateList.querySelector('.field-title').innerHTML = slots.title;
-        updateList.querySelector('.field-year').innerHTML = slots.year;
+        updateList.querySelector('.field-year').innerHTML = parseInt(slots.year);
         // remove form
         radioForm.remove();
         updateForm.parentElement.remove();
@@ -74,10 +74,8 @@ pl.view.index = {
     },
     createAddForm: function() {
         // prevent duplicate form
-        if(document.getElementById('formAddItem') !== null) return;
-
+        if(document.getElementById('formAddItem') !== null) return;    
         pl.view.index.clearOtherForm();
-
        
         var bookList = document.querySelector('.list-book');
         bookList.innerHTML += pl.view.index.templateAddForm();
@@ -89,8 +87,7 @@ pl.view.index = {
         });
         window.addEventListener("beforeunload", function() {
             Book.saveAll();
-        });
-        
+        });        
         var cancelButton = document.getElementById('btnAddCancel');
         cancelButton.addEventListener('click', function() {
             this.parentElement.parentElement.remove();
@@ -99,13 +96,12 @@ pl.view.index = {
     createUpdateForm: function(keys) {
         // prevent duplicate form
         if(document.querySelector('.form-radio') !== null) return;
+        pl.view.index.clearOtherForm();
 
         var container = document.querySelector('.contents-main');
         var radioForm = document.createElement('form');
         radioForm.className = 'form-radio';
         container.appendChild(radioForm);
-
-        pl.view.index.createUpdateTextForm(radioForm);
         var keys= Object.keys(Book.instances);
         for(var i=0; i<keys.length; i++){
             key = keys[i];
@@ -121,15 +117,10 @@ pl.view.index = {
             });
             radioForm.appendChild(radio);
         }
+
+        pl.view.index.createUpdateTextForm(radioForm);
     },
     createUpdateTextForm: function(radioForm) {
-        // prevent duplicate form
-        if(document.getElementById('formUpdateItem') !== null) return;
-
-        var addForm = document.getElementById('formAddItem');
-        if(addForm !== null) {
-            addForm.parentElement.remove();
-        }
 
         var bookList = document.querySelector('.list-book');
         bookList.innerHTML += pl.view.index.templateUpdateTextForm();
@@ -152,6 +143,7 @@ pl.view.index = {
     createDeleteForm: function(keys) {
         // prevent duplicate form
         if(document.querySelector('.form-checkbox') !== null) return;
+        pl.view.index.clearOtherForm();
 
         var container = document.querySelector('.contents-main');
         var checkboxForm = document.createElement('form');        
@@ -197,11 +189,21 @@ pl.view.index = {
         });
     },
     clearOtherForm: function() {
+        var addForm = document.getElementById('formAddItem');
+        if(addForm !== null) {
+            addForm.parentElement.remove();
+        }
         var updateForm = document.getElementById('formUpdateItem');
         if(updateForm !== null) {
             updateForm.parentElement.remove();
             var radioForm = document.querySelector('.form-radio');
             radioForm.remove();
+        }
+        var deleteButton = document.getElementById('btnDeleteSubmit');
+        if(deleteButton !== null) {
+            deleteButton.parentElement.remove();
+            var checkboxForm = document.querySelector('.form-checkbox');
+            checkboxForm.remove();
         }
     },
     textUpdateForm: function(isbn, title, year) {
@@ -240,7 +242,7 @@ pl.view.index = {
     templateDeleteSubmitButton: function() {
         return '<li class="list-item-book">\
                     <button id="btnDeleteCancel" class="btn-red btn-submit" type="button">cancel</button>\
-                    <button id="btnDeleteSubmit" class="btn-red btn-submit" type="submit">delete</button>\
+                    <button id="btnDeleteSubmit" class="btn-red btn-submit" type="button">delete</button>\
                 </li>';
     }
 }
