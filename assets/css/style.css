@@ -127,32 +127,45 @@ button {
 .list-item-book .field-year {
     width: 20%;
 }
-.list-item-book .label-isbn {
+.label-isbn {
     display: inline-block;
     width: 30%;
-    padding: 0 10px;    
+    padding: 0 5px;    
 }
-.list-item-book .label-title {
+.label-title {
     display: inline-block;
     width: 50%;
-    padding: 0 10px;    
+    padding: 0 5px;    
 }
-.list-item-book .label-year {
+.label-year {
     display: inline-block;
     width: 20%;
-    padding: 0 10px;    
+    padding: 0 5px;    
 }
-.list-item-book .field-input {
+.field-input {
     width: 100%;
     padding: 6px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-
 .form-add-item {
+    display: none;
     width: 100%;
+    padding-top: 10px;
     font-size: 0;
     text-align: right;
+}
+.update-radio-wrapper {
+    position: absolute;
+    top: 82px;
+    right: 24px;
+    /*width: 20px;*/
+}
+.delete-checkbox-wrapper {
+    position: absolute;
+    top: 82px;
+    left: 24px;
+    /*width: 20px;*/
 }
 .form-add-item .field-wrapper {
     display: inline-block;
@@ -161,21 +174,25 @@ button {
 .form-add-item .btn-submit {
     margin: 10px 10px 0 0;
 }
-
+/*
 .form-radio {
     position: absolute;
     top: 82px;
     left: 20px;
     width: 20px;
     font-size: 0;
-}
-.form-checkbox {
+}*/
+/*.form-checkbox {
     position: absolute;
     top: 82px;
     right: 20px;
     width: 20px;
     font-size: 0;
-}
-.input-radio, .input-check {
+}*/
+.input-radio, .input-checkbox {
+    display: block;
     height: 40px;
 }
+/*.input-radio {
+    height: 40px;
+}*/
