@@ -1,42 +1,36 @@
-pl.view.index = {
+view.index = {
     setupUserInterface: function() {
         var bookList = document.querySelector('.list-book');
         var keys=[], key="";
-        Book.loadAll();
-        keys= Object.keys(Book.instances);
+        ctrl.book.loadAll();
+        keys= Object.keys(model.books);
         for(var i=0; i<keys.length; i++) {
             key = keys[i];
             var listItem = document.createElement('li');
             listItem.className = 'list-item-book';
-            listItem.innerHTML = pl.view.index.templateListItem(Book.instances[key].isbn,
-                                                                Book.instances[key].title,
-                                                                Book.instances[key].year);
+            listItem.innerHTML = view.index.templateListItem(model.books[key].isbn,
+                                                             model.books[key].title,
+                                                             model.books[key].year);
             bookList.appendChild(listItem);
         }
-
         // form event
         var addForm = document.getElementById('formAddItem');
-        pl.view.index.registerAddSubmitEvent(addForm);
-        
+        view.index.registerAddSubmitEvent(addForm);
         var updateForm = document.getElementById('formUpdateItem');
-        pl.view.index.registerUpdateSubmitEvent(updateForm);
-
+        view.index.registerUpdateSubmitEvent(updateForm);
         var deleteForm = document.getElementById('formDeleteItem');
-        pl.view.index.registerDeleteSubmitEvent(deleteForm);
+        view.index.registerDeleteSubmitEvent(deleteForm);
 
         // bottom button event
         var addButton = document.getElementById('btnAddbook');
         addButton.addEventListener('click', 
-            function() { pl.view.index.createAddForm(addForm)});
-
+            function() { view.index.createAddForm(addForm)});
         var updateButton = document.getElementById('btnUpdateBook');
         updateButton.addEventListener('click', 
-            function() { pl.view.index.createUpdateForm(updateForm)});
-        
-        // create select box and submit button for button
+            function() { view.index.createUpdateForm(updateForm)});
         var deleteButton = document.getElementById('btnDeleteBook');
         deleteButton.addEventListener('click',
-            function() { pl.view.index.createDeleteForm(deleteForm)});
+            function() { view.index.createDeleteForm(deleteForm)});
     },
     submitAddBook: function(bookList) {
         // update storage
@@ -44,14 +38,14 @@ pl.view.index = {
         var slots = { isbn: addForm.isbn.value,
                       title: addForm.title.value,
                       year: addForm.year.value };
-        Book.add(slots);
+        ctrl.book.add(slots);
         // add list
         var listItem = document.createElement('li');
         listItem.className = 'list-item-book';
-        listItem.innerHTML = pl.view.index.templateListItem(slots.isbn,
+        listItem.innerHTML = view.index.templateListItem(slots.isbn,
                                                             slots.title,
                                                             parseInt(slots.year));
-        var index = Object.keys(Book.instances).indexOf(slots.isbn);
+        var index = Object.keys(model.books).indexOf(slots.isbn);
         bookList.insertBefore(listItem, bookList.children[index]);
         // remove form
         addForm.reset();
@@ -62,7 +56,7 @@ pl.view.index = {
         var slots = { isbn: updateForm.isbn.value,
                       title: updateForm.title.value,
                       year: updateForm.year.value };
-        Book.update(slots);
+        ctrl.book.update(slots);
         // update list
         var updateList = document.querySelector('.field-isbn[data-isbn="' + updateForm.isbn.value + '"').parentElement;
         updateList.querySelector('.field-title').innerHTML = slots.title;
@@ -78,7 +72,7 @@ pl.view.index = {
             if(bookArr[i].checked) {
                 deleteItem = deleteList.children[i];
                 deleteItem.remove();
-                Book.destroy(deleteItem.querySelector('.field-isbn').innerHTML);
+                ctrl.book.destroy(deleteItem.querySelector('.field-isbn').innerHTML);
             }
         }
         deleteForm.reset();
@@ -86,7 +80,7 @@ pl.view.index = {
     },
     createAddForm: function(addForm) {
         if(addForm.style.display === "block") return;        
-        pl.view.index.clearOtherForm();
+        view.index.clearOtherForm();
 
         addForm.style.display = "block";
     },
@@ -95,10 +89,7 @@ pl.view.index = {
         // prevent duplicate form
         var submitButton = document.getElementById('btnAddSubmit');
         submitButton.addEventListener("click", function() {
-            pl.view.index.submitAddBook(bookList);
-        });
-        window.addEventListener("beforeunload", function() {
-            Book.saveAll();
+            view.index.submitAddBook(bookList);
         });
         var cancelButton = document.getElementById('btnAddCancel');
         cancelButton.addEventListener('click', function() {
@@ -109,24 +100,24 @@ pl.view.index = {
     createUpdateForm: function(updateForm) {
         // prevent duplicate form        
         if(updateForm.style.display === "block") return;
-        pl.view.index.clearOtherForm();
+        view.index.clearOtherForm();
 
         updateForm.style.display = "block";
 
         var radioForm = updateForm.querySelector('.update-radio-wrapper');
         radioForm.innerHTML = '';
-        var keys= Object.keys(Book.instances);
+        var keys= Object.keys(model.books);
         for(var i=0; i<keys.length; i++){
             key = keys[i];
-            book = Book.instances[key];
+            book = model.books[key];
             radio = document.createElement("input");
             radio.className = 'input-radio';
             radio.type = "radio";
             radio.name = "book";
             radio.value = book.isbn;
             radio.addEventListener('change', function() {
-                book = Book.instances[this.value];
-                pl.view.index.textUpdateForm(updateForm, book);
+                book = model.books[this.value];
+                view.index.textUpdateForm(updateForm, book);
             });
             radioForm.appendChild(radio);
         }
@@ -135,10 +126,7 @@ pl.view.index = {
         // submit update button
         var updateButton = document.getElementById('btnUpdateSubmit');
         updateButton.addEventListener("click", function() {
-            pl.view.index.submitUpdateBook(updateForm);
-        });
-        window.addEventListener("beforeunload", function() {
-            Book.saveAll();
+            view.index.submitUpdateBook(updateForm);
         });
         var cancelButton = document.getElementById('btnUpdateCancel');
         cancelButton.addEventListener('click', function() {
@@ -149,16 +137,16 @@ pl.view.index = {
     createDeleteForm: function(deleteForm) {
         // prevent duplicate form        
         if(deleteForm.style.display === "block") return;
-        pl.view.index.clearOtherForm();
+        view.index.clearOtherForm();
 
         deleteForm.style.display = "block";
 
         var checkboxForm = deleteForm.querySelector('.delete-checkbox-wrapper');
         checkboxForm.innerHTML = '';   
-        var keys= Object.keys(Book.instances);
+        var keys= Object.keys(model.books);
         for(var i=0; i<keys.length; i++){
             key = keys[i];
-            book = Book.instances[key];
+            book = model.books[key];
             checkbox = document.createElement("input");
             checkbox.className = 'input-checkbox';
             checkbox.type = "checkbox";
@@ -170,10 +158,7 @@ pl.view.index = {
     registerDeleteSubmitEvent: function(deleteForm) {
         var submitButton = document.getElementById('btnDeleteSubmit');
         submitButton.addEventListener('click', function() {
-            pl.view.index.submitDeleteBook(deleteForm);
-        });
-        window.addEventListener("beforeunload", function() {
-            Book.saveAll();
+            view.index.submitDeleteBook(deleteForm);
         });
         var cancelButton = document.getElementById('btnDeleteCancel');
         cancelButton.addEventListener('click', function() {

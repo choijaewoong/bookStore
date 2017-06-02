@@ -45,16 +45,17 @@
                 <button id="btnUpdateBook" class="btn-brown" type="button">Update</button>
                 <button id="btnAddbook" class="btn-blue" type="button">Add</button>
                 <button id="btnDeleteBook" class="btn-red" type="button" type="button">delete</button>
-                <button class="btn-create" type="button" onclick="Book.createTestData()">Create</button>
-                <button class="btn-red" type="button" onclick="Book.clearData()">Clear</button>
+                <button class="btn-create" type="button" onclick="ctrl.book.createTestData()">Create</button>
+                <button class="btn-red" type="button" onclick="ctrl.book.clearData()">Clear</button>
             </div>
         </div>
     </div>
     <script src="assets/js/ctrl/initialize.js"></script>
     <script src="assets/js/model/Book.js"></script>
+    <script src="assets/js/ctrl/ctrlBook.js"></script>
     <script src="assets/js/view/viewIndex.js"></script>
     <script>
-        window.addEventListener("load", pl.view.index.setupUserInterface);
+        window.addEventListener("load", view.index.setupUserInterface);
     </script>
 </body>
 </html>
