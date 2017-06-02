@@ -12,13 +12,14 @@
         <h1>Book Store</h1>
         <div class="contents">
             <div class="contents-main">
-                <ul class="list-book">
-                    <li class="list-item-book list-item-head">
-                        <span class="field-isbn">ISBN</span>
-                        <span class="field-title">Title</span>
-                        <span class="field-year">Year</span>
-                    </li>
-                </ul>
+                <div class="list-header">
+                    <span class="field-isbn">ISBN</span>
+                    <span class="field-title">Title</span>
+                    <span class="field-year">Year</span>
+                </div>
+                <!-- BOOK LIST -->
+                <ul class="list-book"></ul>
+                <!-- FORM -->
                 <form id="formAddItem" class="form-add-item">
                     <label class="label-isbn" for="isbn"><input id="isbn" class="field-input" type="text"></label>
                     <label class="label-title" for="title"><input id="title" class="field-input" type="text"></label>
@@ -39,10 +40,6 @@
                     <button id="btnDeleteCancel" class="btn-red btn-submit" type="button">cancel</button>
                     <button id="btnDeleteSubmit" class="btn-red btn-submit" type="button">delete</button>
                 </form>
-
-                <!--<form class="form-radio"></form>-->
-                <!--<form id="formUpdateItem" class="form-add-item"></form>-->
-                <!--<form id="formAddItem" class="form-add-item"></form>-->
             </div>
             <div class="contents-bottom">
                 <button id="btnUpdateBook" class="btn-brown" type="button">Update</button>
